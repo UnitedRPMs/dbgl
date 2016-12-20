@@ -34,8 +34,8 @@ Requires:       jpackage-utils
 Requires:       SDL_net
 Requires:       SDL_sound
 Source0:        http://members.quicknet.nl/blankendaalr/dbgl/download/src080.zip
-Source1:        dbgl.desktop
-Source2:        dbgl.appdata.xml
+Source1:        https://raw.githubusercontent.com/UnitedRPMs/dbgl/master/dbgl.desktop
+Source2:        https://raw.githubusercontent.com/UnitedRPMs/dbgl/master/dbgl.appdata.xml
 
 %description
 DBGL is a Java front-end for DOSBox, based largely upon the proven
