@@ -3,7 +3,7 @@
 Name:           dbgl
 Summary:        DOSBox Game Launcher
 URL:            http://home.quicknet.nl/qn/prive/blankendaalr/dbgl/
-Version:        0.80
+Version:        0.81
 Release:        3%{?dist}
 License:        GPLv2
 BuildRequires:  ant
@@ -33,7 +33,7 @@ Requires:       java-headless >= 1:1.7.0
 Requires:       jpackage-utils
 Requires:       SDL_net
 Requires:       SDL_sound
-Source0:        http://members.quicknet.nl/blankendaalr/dbgl/download/src080.zip
+Source0:        http://members.quicknet.nl/blankendaalr/dbgl/download/src081.zip
 Source1:        dbgl.desktop
 Source2:        dbgl.appdata.xml
 
@@ -130,7 +130,7 @@ appstream-util validate-relax --nonet \
   - probably you meant %{ix86}
   - to %check please
 
-* Mon Dec 19 2016 Sérgio Basto <sergio@serjux.com> - 0.80-2
+* Mon Dec 19 2016 Sérgio Basto <sergio@serjux.com> - 0.81-2
 - Bump release
 - Use external .desktop file easier to send to upstream
 - Add Packaging:AppData
