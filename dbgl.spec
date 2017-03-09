@@ -4,7 +4,7 @@ Name:           dbgl
 Summary:        DOSBox Game Launcher
 URL:            http://home.quicknet.nl/qn/prive/blankendaalr/dbgl/
 Version:        0.81
-Release:        3%{?dist}
+Release:        1%{?dist}
 License:        GPLv2
 BuildRequires:  ant
 BuildRequires:  eclipse-swt
@@ -52,8 +52,8 @@ the interface is still quite rough around the edges.
 rm -rf ./src/dist/linuxshared/lib
 rm -rf ./src/dist/*/DOSBox-0.74
 rm -r ./src/dist/shared/lib/hsqldb.jar
-rm -r ./src/dist/shared/lib/commons-lang3-3.4.jar
-rm -r ./src/dist/shared/lib/commons-io-2.4.jar
+rm -r ./src/dist/shared/lib/commons-lang3-3.5.jar
+rm -r ./src/dist/shared/lib/commons-io-2.5.jar
 # not easy unbundle jersey-2.13.jar fedora have jersey-2.18 and 2.23 seems that
 # haven't org.glassfish.jersey.core.jersey-server
 #rm -r ./src/dist/shared/lib/jersey-2.13.jar
@@ -79,12 +79,12 @@ ant distlinux
 %install
 install -dm 755 %{buildroot}%{_javadir}/%{name}/
 %ifarch x86_64
-    tar xvf dist/dbgl080_64bit.tar.gz -C %{buildroot}%{_javadir}/%{name}/
+    tar xvf dist/dbgl081_64bit.tar.gz -C %{buildroot}%{_javadir}/%{name}/
 %else
     %ifarch %{ix86}
-        tar xvf dist/dbgl080.tar.gz -C %{buildroot}%{_javadir}/%{name}/
+        tar xvf dist/dbgl081.tar.gz -C %{buildroot}%{_javadir}/%{name}/
     %else
-        tar xvf dist/dbgl080_generic.tar.gz -C %{buildroot}%{_javadir}/%{name}/
+        tar xvf dist/dbgl081_generic.tar.gz -C %{buildroot}%{_javadir}/%{name}/
     %endif
 %endif
 
@@ -123,6 +123,9 @@ appstream-util validate-relax --nonet \
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Thu Mar 09 2017 Sérgio Basto <sergio@serjux.com> - 0.81-1
+- Update to 0.81
+
 * Fri Dec 23 2016 Sérgio Basto <sergio@serjux.com> - 0.80-3
 - set jar classpath with (unbundle) system libraries (instead use symbol links)
 - gnatenkobrain review:
@@ -130,7 +133,7 @@ appstream-util validate-relax --nonet \
   - probably you meant %{ix86}
   - to %check please
 
-* Mon Dec 19 2016 Sérgio Basto <sergio@serjux.com> - 0.81-2
+* Mon Dec 19 2016 Sérgio Basto <sergio@serjux.com> - 0.80-2
 - Bump release
 - Use external .desktop file easier to send to upstream
 - Add Packaging:AppData
