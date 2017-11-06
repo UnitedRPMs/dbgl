@@ -79,12 +79,12 @@ ant distlinux
 %install
 install -dm 755 %{buildroot}%{_javadir}/%{name}/
 %ifarch x86_64
-    tar xvf dist/dbgl081_64bit.tar.gz -C %{buildroot}%{_javadir}/%{name}/
+    tar xvf dist/dbgl082_64bit.tar.gz -C %{buildroot}%{_javadir}/%{name}/
 %else
     %ifarch %{ix86}
-        tar xvf dist/dbgl081.tar.gz -C %{buildroot}%{_javadir}/%{name}/
+        tar xvf dist/dbgl082.tar.gz -C %{buildroot}%{_javadir}/%{name}/
     %else
-        tar xvf dist/dbgl081_generic.tar.gz -C %{buildroot}%{_javadir}/%{name}/
+        tar xvf dist/dbgl082_generic.tar.gz -C %{buildroot}%{_javadir}/%{name}/
     %endif
 %endif
 
