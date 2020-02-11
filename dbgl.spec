@@ -1,9 +1,26 @@
+#
+# spec file for package dbgl
+#
+# Copyright (c) 2020 UnitedRPMs.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via https://goo.gl/zqFJft
+#
+
 %global debug_package %{nil}
 
 Name:           dbgl
 Summary:        DOSBox Game Launcher
 URL:            http://home.quicknet.nl/qn/prive/blankendaalr/dbgl/
-Version:        0.90
+Version:        0.91
 %global         uversion  %(foo=%{version}; echo ${foo//./})
 Release:        1%{?dist}
 License:        GPLv2
@@ -108,6 +125,9 @@ appstream-util validate-relax --nonet \
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Sun Feb 09 2020 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.91-1
+- Updated to 0.91
+
 * Wed Dec 25 2019 Sérgio Basto <sergio@serjux.com> - 0.90-1
 - Update to 0.90
 
