@@ -20,35 +20,24 @@
 Name:           dbgl
 Summary:        DOSBox Game Launcher
 URL:            http://home.quicknet.nl/qn/prive/blankendaalr/dbgl/
-Version:        0.91
+Version:        0.92
 %global         uversion  %(foo=%{version}; echo ${foo//./})
 Release:        1%{?dist}
 License:        GPLv2
-BuildRequires:  ant
-BuildRequires:  eclipse-swt
-BuildRequires:  hsqldb1
-BuildRequires:  desktop-file-utils
-BuildRequires:  java-devel
-BuildRequires:  apache-commons-lang3
-BuildRequires:  apache-commons-io
 BuildRequires:  libappstream-glib
-#BuildRequires:  jersey
-#BuildRequires:  glassfish-jax-rs-api
-#BuildRequires:  glassfish-hk2-utils
-#BuildRequires:  glassfish-hk2-configuration
-#BuildRequires:  glassfish-hk2-metadata-generator
-#BuildRequires:  glassfish-hk2-hk2
+
 Requires:       dosbox >= 0.70
 Requires:       eclipse-swt
-Requires:       hsqldb1
+Recommends:     hsqldb1
 Requires:       java >= 1:1.8.0
 Requires:       java-headless >= 1:1.8.0
 Requires:       jpackage-utils
 Requires:       SDL_net
 Requires:       SDL_sound
-Source0:        http://members.quicknet.nl/blankendaalr/dbgl/download/src%{uversion}.zip
+Source0:        http://members.quicknet.nl/blankendaalr/dbgl/download/%{name}%{uversion}.tar.gz
 Source1:        dbgl.desktop
 Source2:        dbgl.appdata.xml
+Source3:        dbgl	
 
 %description
 DBGL is a Java front-end for DOSBox, based largely upon the proven
@@ -60,57 +49,33 @@ the interface is still quite rough around the edges.
 
 %prep
 %setup -qc
-# remove bundles
-# swt
-rm -r ./src/dist/linuxshared/lib
-rm -r ./src/dist/macshared
-rm -r ./src/dist/winshared
-rm -r ./src/dist/shared/lib/hsqldb.jar
-rm -r ./src/dist/shared/lib/commons-lang3-*.jar
-rm -r ./src/dist/shared/lib/commons-io-*.jar
-# not easy unbundle jersey-2.13.jar fedora have jersey-2.18 and 2.23 seems that
-# haven't org.glassfish.jersey.core.jersey-server
-#rm -r ./src/dist/shared/lib/jersey-2.13.jar
-#rm -r ./src/dist/shared/lib/jersey-2.27.0.jar
 
 
 %build
-mkdir -p lib
-build-jar-repository -s -p lib commons-io commons-lang3 hsqldb1-1 swt
-#    glassfish-jax-rs-api jersey glassfish-hk2-utils \
-#    glassfish-hk2-configuration glassfish-hk2/hk2-metadata-generator \
-#    glassfish-hk2-hk2
-
-# fix build.xml clean all swt.*64.jar
-sed -i '/swt.*64.jar/d' build.xml
-
-ant distlinux
+# Nothing here
 
 %install
-install -dm 755 %{buildroot}%{_javadir}/%{name}/
-tar xvf dist/dbgl%{uversion}.tar.gz -C %{buildroot}%{_javadir}/%{name}/
 
-# use symbol links to system libraries
-build-jar-repository -s -p %{buildroot}/%{_javadir}/%{name}/lib commons-io \
-    commons-lang3 hsqldb1-1 swt
+  install -dm755 %{buildroot}/usr/share/java/%{name}
+  install -m755 dbgl %{buildroot}/usr/share/java/%{name}
+  install -m644 dbgl.jar \
+    dbgl.png \
+    %{buildroot}/usr/share/java/%{name}
 
-# startscript
-mkdir -p %{buildroot}%{_bindir}
-pushd %{buildroot}%{_bindir}
-ln -s %{_javadir}/%{name}/dbgl
-popd
+  for dir in captures db dosroot export lib profiles templates xsl; do
+    mv "$dir" %{buildroot}/usr/share/java/%{name}/
+  done
 
-# icons
-mkdir %{buildroot}%{_datadir}/pixmaps
-mv %{buildroot}%{_javadir}/%{name}/dbgl.png %{buildroot}%{_datadir}/pixmaps/
+  install -dm755 %{buildroot}/usr/bin
+  install -m755 %{S:3} %{buildroot}/usr/bin/dbgl
 
-# menu
-mkdir -p %{buildroot}%{_datadir}/applications
-desktop-file-install                               \
---dir=%{buildroot}%{_datadir}/applications         \
-%{SOURCE1}
+  install -dm755 %{buildroot}/usr/share/icons/hicolor/256x256/apps
+  install -m644 dbgl.png %{buildroot}/usr/share/icons/hicolor/256x256/apps
 
-install -D -p -m 0644 %{SOURCE2} \
+  install -dm755 %{buildroot}/usr/share/applications
+  install -m644 %{S:1} %{buildroot}/usr/share/applications
+
+  install -D -p -m 0644 %{S:2} \
     %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
 
 %check
@@ -119,12 +84,16 @@ appstream-util validate-relax --nonet \
 
 %files
 %{_bindir}/%{name}
-%{_javadir}/%{name}
-%{_datadir}/pixmaps/*.png
+%{_javadir}/%{name}/
+%{_datadir}/icons/hicolor/256x256/apps/dbgl.png
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+
+* Sat Dec 26 2020 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.92-1
+- Updated to 0.92
+
 * Sun Feb 09 2020 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.91-1
 - Updated to 0.91
 
